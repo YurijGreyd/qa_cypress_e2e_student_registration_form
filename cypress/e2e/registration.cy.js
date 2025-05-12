@@ -17,13 +17,17 @@ describe('Student Registration page', () => {
     cy.get('#userEmail').type(email);
     cy.get('label[for="gender-radio-1"]').click();
     cy.get('#userNumber').type(mobile);
+
     cy.get('#dateOfBirthInput').click();
     cy.get('.react-datepicker__month-select').select('January');
     cy.get('.react-datepicker__year-select').select('2000');
-    cy.get('.react-datepicker__day--001:first').click();
+    // eslint-disable-next-line max-len
+    cy.get('.react-datepicker__day--001:not(.react-datepicker__day--outside-month)').click();
+
     cy.get('#subjectsInput').type('Computer Science{enter}');
     cy.get('label[for="hobbies-checkbox-1"]').click();
     cy.get('#currentAddress').type(address);
+
     cy.get('#state').click();
     cy.contains('#react-select-3-option-0', 'NCR').click();
     cy.get('#city').click();
@@ -35,19 +39,13 @@ describe('Student Registration page', () => {
     cy.get('table').contains('Student Email').next().should('contain', email);
     cy.get('table').contains('Gender').next().should('contain', 'Male');
     cy.get('table').contains('Mobile').next().should('contain', mobile);
-    cy
-      .get('table')
-      .contains('Date of Birth')
-      .next().should('contain', '01 January,2000');
-    cy
-      .get('table')
-      .contains('Subjects')
-      .next().should('contain', 'Computer Science');
+    // eslint-disable-next-line max-len
+    cy.get('table').contains('Date of Birth').next().should('contain', '01 January,2000');
+    // eslint-disable-next-line max-len
+    cy.get('table').contains('Subjects').next().should('contain', 'Computer Science');
     cy.get('table').contains('Hobbies').next().should('contain', 'Sports');
     cy.get('table').contains('Address').next().should('contain', address);
-    cy
-      .get('table')
-      .contains('State and City')
-      .next().should('contain', 'NCR Delhi');
+    // eslint-disable-next-line max-len
+    cy.get('table').contains('State and City').next().should('contain', 'NCR Delhi');
   });
 });
